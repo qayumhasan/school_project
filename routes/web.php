@@ -1011,8 +1011,32 @@ Auth::routes();
 
 
 
-Route::group(['prefix' => 'admin/admission/enquiry', 'middleware' => 'auth:admin' , 'namespace' => 'Admin'], function() {
+Route::group(['prefix' => 'admin/front/office/admission/enquiry', 'middleware' => 'auth:admin' , 'namespace' => 'Admin'], function() {
     Route::get('/', 'AdmissionEnquiryController@index')->name('admin.admission.enquiry.index');
     Route::post('/create', 'AdmissionEnquiryController@create')->name('admin.admission.enquiry.create');
     Route::get('/search', 'AdmissionEnquiryController@search')->name('admin.admission.enquiry.search');
+    Route::post('/update', 'AdmissionEnquiryController@update')->name('admin.admission.enquiry.update');
+    Route::post('/follow/up/update', 'AdmissionEnquiryController@followUpUpdate')->name('admin.admission.enquiry.update');
+    Route::get('/delete/{id}', 'AdmissionEnquiryController@enquiryDelete')->name('admin.admission.enquiry.delete');
+});
+
+Route::group(['prefix' => 'admin/front/office/visitor/list', 'middleware' => 'auth:admin' , 'namespace' => 'Admin'], function() {
+    Route::get('/', 'VisitorListController@index')->name('admin.visitor.list');
+    Route::post('/store', 'VisitorListController@store')->name('admin.visitor.store');
+    Route::get('/edit/{id}', 'VisitorListController@edit')->name('admin.visitor.edit');
+    Route::post('/update/{id}', 'VisitorListController@update')->name('admin.visitor.update');
+    Route::get('/delete/{id}', 'VisitorListController@delete')->name('admin.visitor.delete');
+    Route::get('/status/{id}', 'VisitorListController@status')->name('admin.visitor.status');
+    Route::post('/multi/delete', 'VisitorListController@multiDelete')->name('admin.visitor.multi.delete');
+    
+});
+Route::group(['prefix' => 'admin/front/office/call/log', 'middleware' => 'auth:admin' , 'namespace' => 'Admin'], function() {
+    Route::get('/', 'PhoneCallLogController@index')->name('admin.call.log.list');
+    Route::post('/store', 'PhoneCallLogController@store')->name('admin.call.log.store');
+    Route::get('/edit/{id}', 'PhoneCallLogController@edit')->name('admin.call.log.edit');
+    Route::post('/update/{id}', 'PhoneCallLogController@update')->name('admin.call.log.update');
+    Route::get('/delete/{id}', 'PhoneCallLogController@delete')->name('admin.call.log.delete');
+    Route::get('/status/{id}', 'PhoneCallLogController@status')->name('admin.call.log.status');
+    Route::post('/multi/delete', 'PhoneCallLogController@multiDelete')->name('admin.call.log.multi.delete');
+    
 });

@@ -41,7 +41,7 @@
 
                 <!-- New work start from here -->
 
-                <li class="single-nav-wrapper {{ Request::is('admin/admission/enquiry*') ? 'mm-active' : '' }}">
+                <li class="single-nav-wrapper {{ Request::is('admin/front/office/*') ? 'mm-active' : '' }}">
                     <a class="has-arrow menu-item" href="#" aria-expanded="false">
                         <span class="left-icon"><i class="fab fa-ioxhost"></i></span>
                         <span class="menu-text">Front Office</span>
@@ -50,7 +50,9 @@
 
                         <li>
 
-                            <a class="{{ Request::is('admin/admission/enquiry') ? 'text_active' : '' }}" href="{{ route('admin.admission.enquiry.index') }}"> Admission Enquiry</a>
+                            <a class="{{ Request::is('admin/front/office/admission/enquiry') ? 'text_active' : '' }}" href="{{ route('admin.admission.enquiry.index') }}"> Admission Enquiry</a>
+                            <a class="{{ Request::is('admin/front/office/visitor/list') ? 'text_active' : '' }}" href="{{ route('admin.visitor.list') }}"> Visitor List</a>
+                            <a class="{{ Request::is('admin/front/office/call/log') ? 'text_active' : '' }}" href="{{ route('admin.call.log.list') }}"> Phone Call Log</a>
 
                         </li>
 
