@@ -48,11 +48,18 @@
                     </a>
                     <ul class="dashboard-menu">
 
+                    
+                   
                         <li>
-
+                      
                             <a class="{{ Request::is('admin/front/office/admission/enquiry') ? 'text_active' : '' }}" href="{{ route('admin.admission.enquiry.index') }}"> Admission Enquiry</a>
+                      
                             <a class="{{ Request::is('admin/front/office/visitor/list') ? 'text_active' : '' }}" href="{{ route('admin.visitor.list') }}"> Visitor List</a>
                             <a class="{{ Request::is('admin/front/office/call/log') ? 'text_active' : '' }}" href="{{ route('admin.call.log.list') }}"> Phone Call Log</a>
+                            <a class="{{ Request::is('admin/front/office/postal/dispatch') ? 'text_active' : '' }}" href="{{ route('admin.postal.dispatch.list') }}"> Postal Dispatch</a>
+                            <a class="{{ Request::is('admin/front/office/postal/receive') ? 'text_active' : '' }}" href="{{ route('admin.postal.receives.list') }}"> Postal Receives</a>
+                            <a class="{{ Request::is('admin/front/office/complaint') ? 'text_active' : '' }}" href="{{ route('admin.complaint.list') }}"> Complain</a>
+                            <a class="{{ Request::is('admin/front/office/setup') ? 'text_active' : '' }}" href="{{ route('admin.setup.index') }}"> Front Office Setup</a>
 
                         </li>
 

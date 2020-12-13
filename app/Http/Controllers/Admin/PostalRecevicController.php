@@ -3,32 +3,41 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\PhoneCallLog;
+use App\PostalReceive;
 use Illuminate\Http\Request;
 
-class PhoneCallLogController extends Controller
+class PostalRecevicController extends Controller
 {
+
     public function index()
     {
-        $logs = PhoneCallLog::all();
-        return view('admin.admission.call_log.index',compact('logs'));
+        
+        $postals = PostalReceive::all();
+        return view('admin.admission.postal_receive.index',compact('postals'));
     }
 
     public function store(Request $request)
     {
-        $log = new PhoneCallLog;
-        $log->name = $request->name;
-        $log->phone = $request->phone;
-        $log->date = $request->date;
-        $log->details = $request->description;
-        $log->next_date = $request->next_date;
-        $log->call_duration = $request->call_duration;
+        
+
+        $log = new PostalReceive;
+        $log->title = $request->title;
+        $log->ref_no = $request->ref_no;
+        $log->address = $request->address;
         $log->note = $request->note;
-        $log->call_type = $request->call_type;
+        $log->from_title = $request->form_title;
+        $log->date = $request->date;
+        $log->doc = $request->note;
+
+        if ($request->hasFile('doc')) {
+            $log->doc = $request->file('doc')->store('public/uploads/postal');
+        }
+        
         $log->save();
 
+        
         $notification = array(
-            'messege' => 'Call Log Store successfully:)',
+            'messege' => 'Postal Receives Store successfully:)',
             'alert-type' => 'success'
         );
         return Redirect()->back()->with($notification);
@@ -39,31 +48,35 @@ class PhoneCallLogController extends Controller
     
     public function edit($id)
     {
-        $logs = PhoneCallLog::findOrFail($id);
-        return view('admin.admission.call_log.ajax.edit',compact('logs'));
+        $postal = PostalReceive::findOrFail($id);
+        return view('admin.admission.postal_receive.ajax.edit',compact('postal'));
     }
 
     public function show($id)
     {
-        $logs = PhoneCallLog::findOrFail($id);
-        return view('admin.admission.call_log.ajax.view',compact('logs'));
+        $postal = PostalReceive::findOrFail($id);
+        return view('admin.admission.postal_receive.ajax.view',compact('postal'));
     }
 
     public function update(Request $request , $id)
     {
-        $log = PhoneCallLog::findOrFail($id);
-        $log->name = $request->name;
-        $log->phone = $request->phone;
-        $log->date = $request->date;
-        $log->details = $request->description;
-        $log->next_date = $request->next_date;
-        $log->call_duration = $request->call_duration;
+        $log = PostalReceive::findOrFail($id);
+        $log->title = $request->title;
+        $log->ref_no = $request->ref_no;
+        $log->address = $request->address;
         $log->note = $request->note;
-        $log->call_type = $request->call_type;
+        $log->from_title = $request->form_title;
+        $log->date = $request->date;
+        $log->doc = $request->note;
+
+        if ($request->hasFile('doc')) {
+            $log->doc = $request->file('doc')->store('public/uploads/postal');
+        }
+        
         $log->save();
 
         $notification = array(
-            'messege' => 'Call Log Store successfully:)',
+            'messege' => 'Postal Receives Updated successfully:)',
             'alert-type' => 'success'
         );
         return Redirect()->back()->with($notification);
@@ -71,12 +84,12 @@ class PhoneCallLogController extends Controller
 
     public function delete($id)
     {
-        $visitor = PhoneCallLog::findOrFail($id);
+        $visitor = PostalReceive::findOrFail($id);
         if($visitor){
             $visitor->delete();
         }
         $notification = array(
-            'messege' => 'Call Log Deleted successfully:)',
+            'messege' => 'Postal Receives Deleted successfully:)',
             'alert-type' => 'success'
         );
         return Redirect()->back()->with($notification);
@@ -86,12 +99,12 @@ class PhoneCallLogController extends Controller
     public function status ($id)
     {
         
-        $statusChange = PhoneCallLog::findOrFail($id);
+        $statusChange = PostalReceive::findOrFail($id);
         if ($statusChange->status == 1) {
             $statusChange->status = 0;
             $statusChange->save();
             $notification = array(
-                'messege' => 'Call Log Status is deactivated',
+                'messege' => 'Postal Receives Status is deactivated',
                 'alert-type' => 'success'
             );
             return Redirect()->back()->with($notification);
@@ -99,7 +112,7 @@ class PhoneCallLogController extends Controller
             $statusChange->status = 1;
             $statusChange->save();
             $notification = array(
-                'messege' => 'Call Log Status is activated',
+                'messege' => 'Postal Receives Status is activated',
                 'alert-type' => 'success'
             );
             return Redirect()->back()->with($notification);
@@ -109,18 +122,16 @@ class PhoneCallLogController extends Controller
     public function multiDelete(Request $request)
     {
         foreach($request->deleteId as $row){
-            $visitor = PhoneCallLog::findOrFail($row);
+            $visitor = PostalReceive::findOrFail($row);
                 if($visitor){
                     $visitor->delete();
                 }
         }
 
         $notification = array(
-            'messege' => 'Call Log  Multi Deleted successfully:)',
+            'messege' => 'Postal Receives  Multi Deleted successfully:)',
             'alert-type' => 'success'
         );
         return Redirect()->back()->with($notification);
     }
-
-
 }

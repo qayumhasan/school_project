@@ -2,33 +2,41 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Complain;
+use App\FrontOffice;
 use App\Http\Controllers\Controller;
-use App\PhoneCallLog;
 use Illuminate\Http\Request;
 
-class PhoneCallLogController extends Controller
+class ComplainController extends Controller
 {
     public function index()
     {
-        $logs = PhoneCallLog::all();
-        return view('admin.admission.call_log.index',compact('logs'));
+        
+        $complains = Complain::all();
+        $sources = FrontOffice::where('type','sources')->get();
+        $types = FrontOffice::where('type','complain')->get();
+        return view('admin.admission.complains.index',compact('complains','sources','types'));
     }
 
     public function store(Request $request)
     {
-        $log = new PhoneCallLog;
-        $log->name = $request->name;
-        $log->phone = $request->phone;
+       
+
+        $log = new Complain;
+        $log->type = $request->type;
+        $log->source = $request->source;
+        $log->complain_by = $request->complain_by;
+        $log->phone = $request->Phone;
         $log->date = $request->date;
-        $log->details = $request->description;
-        $log->next_date = $request->next_date;
-        $log->call_duration = $request->call_duration;
+        $log->description = $request->details;
+        $log->action_taken = $request->action_taken;
+        $log->assingned = $request->assigned;
         $log->note = $request->note;
-        $log->call_type = $request->call_type;
         $log->save();
 
+        
         $notification = array(
-            'messege' => 'Call Log Store successfully:)',
+            'messege' => 'Complain Store successfully:)',
             'alert-type' => 'success'
         );
         return Redirect()->back()->with($notification);
@@ -39,31 +47,35 @@ class PhoneCallLogController extends Controller
     
     public function edit($id)
     {
-        $logs = PhoneCallLog::findOrFail($id);
-        return view('admin.admission.call_log.ajax.edit',compact('logs'));
+        $complain = Complain::findOrFail($id);
+        $types = FrontOffice::where('type','complain')->get();
+        
+        $sources = FrontOffice::where('type','sources')->get();
+        return view('admin.admission.complains.ajax.edit',compact('complain','sources','types'));
     }
 
     public function show($id)
     {
-        $logs = PhoneCallLog::findOrFail($id);
-        return view('admin.admission.call_log.ajax.view',compact('logs'));
+        $complain = Complain::findOrFail($id);
+        return view('admin.admission.complains.ajax.view',compact('complain'));
     }
 
     public function update(Request $request , $id)
     {
-        $log = PhoneCallLog::findOrFail($id);
-        $log->name = $request->name;
-        $log->phone = $request->phone;
+        $log = Complain::findOrFail($id);
+        $log->type = $request->type;
+        $log->source = $request->source;
+        $log->complain_by = $request->complain_by;
+        $log->phone = $request->Phone;
         $log->date = $request->date;
-        $log->details = $request->description;
-        $log->next_date = $request->next_date;
-        $log->call_duration = $request->call_duration;
+        $log->description = $request->details;
+        $log->action_taken = $request->action_taken;
+        $log->assingned = $request->assigned;
         $log->note = $request->note;
-        $log->call_type = $request->call_type;
         $log->save();
 
         $notification = array(
-            'messege' => 'Call Log Store successfully:)',
+            'messege' => 'Complain Updated successfully:)',
             'alert-type' => 'success'
         );
         return Redirect()->back()->with($notification);
@@ -71,12 +83,12 @@ class PhoneCallLogController extends Controller
 
     public function delete($id)
     {
-        $visitor = PhoneCallLog::findOrFail($id);
+        $visitor = Complain::findOrFail($id);
         if($visitor){
             $visitor->delete();
         }
         $notification = array(
-            'messege' => 'Call Log Deleted successfully:)',
+            'messege' => 'Complain Deleted successfully:)',
             'alert-type' => 'success'
         );
         return Redirect()->back()->with($notification);
@@ -86,12 +98,12 @@ class PhoneCallLogController extends Controller
     public function status ($id)
     {
         
-        $statusChange = PhoneCallLog::findOrFail($id);
+        $statusChange = Complain::findOrFail($id);
         if ($statusChange->status == 1) {
             $statusChange->status = 0;
             $statusChange->save();
             $notification = array(
-                'messege' => 'Call Log Status is deactivated',
+                'messege' => 'Complain Status is deactivated',
                 'alert-type' => 'success'
             );
             return Redirect()->back()->with($notification);
@@ -99,7 +111,7 @@ class PhoneCallLogController extends Controller
             $statusChange->status = 1;
             $statusChange->save();
             $notification = array(
-                'messege' => 'Call Log Status is activated',
+                'messege' => 'Complain Status is activated',
                 'alert-type' => 'success'
             );
             return Redirect()->back()->with($notification);
@@ -109,18 +121,16 @@ class PhoneCallLogController extends Controller
     public function multiDelete(Request $request)
     {
         foreach($request->deleteId as $row){
-            $visitor = PhoneCallLog::findOrFail($row);
+            $visitor = Complain::findOrFail($row);
                 if($visitor){
                     $visitor->delete();
                 }
         }
 
         $notification = array(
-            'messege' => 'Call Log  Multi Deleted successfully:)',
+            'messege' => 'Complain  Multi Deleted successfully:)',
             'alert-type' => 'success'
         );
         return Redirect()->back()->with($notification);
     }
-
-
 }

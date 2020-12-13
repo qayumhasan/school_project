@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\FrontOffice;
 use App\Http\Controllers\Controller;
 use App\VisitorList;
 use Illuminate\Http\Request;
@@ -11,7 +12,9 @@ class VisitorListController extends Controller
     public function index()
     {
         $visitors = VisitorList::all();
-        return view('admin.admission.visitor.index',compact('visitors'));   
+        $propose = FrontOffice::where('type','propuse')->get();
+        
+        return view('admin.admission.visitor.index',compact('visitors','propose'));   
     }
 
     public function store(Request $request)
@@ -33,7 +36,9 @@ class VisitorListController extends Controller
         $visitor->intime = $request->in_time;
         $visitor->out_time = $request->out_time;
         $visitor->note = $request->description;
-        $visitor->doc = $request->file('doc')->store('public/uploads/visitor');
+        if ($request->hasFile('doc')) {
+            $visitor->doc = $request->file('doc')->store('public/uploads/visitor');
+        }
         $visitor->save();
         $notification = array(
             'messege' => 'Visitor assigned successfully:)',
@@ -45,7 +50,8 @@ class VisitorListController extends Controller
     public function edit($id)
     {
         $visitor = VisitorList::findOrFail($id);
-        return view('admin.admission.visitor.ajax.edit',compact('visitor'));
+        $propose = FrontOffice::where('type','propuse')->get();
+        return view('admin.admission.visitor.ajax.edit',compact('visitor','propose'));
     }
 
     public function update(Request $request , $id)
@@ -66,7 +72,10 @@ class VisitorListController extends Controller
         $visitor->intime = $request->in_time;
         $visitor->out_time = $request->out_time;
         $visitor->note = $request->description;
-        $visitor->doc = $request->file('doc')->store('public/uploads/visitor');
+        if ($request->hasFile('doc')) {
+            $visitor->doc = $request->file('doc')->store('public/uploads/visitor');
+        }
+        
         $visitor->save();
         $notification = array(
             'messege' => 'Visitor Updated successfully:)',

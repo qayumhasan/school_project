@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreatePhoneCallLogsTable extends Migration
+class CreateComplainsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,16 +13,18 @@ class CreatePhoneCallLogsTable extends Migration
      */
     public function up()
     {
-        Schema::create('phone_call_logs', function (Blueprint $table) {
+        Schema::create('complains', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('name');
+            $table->string('type');
+            $table->string('source');
+            $table->string('complain_by');
             $table->string('phone');
             $table->string('date');
-            $table->string('details')->nullable();
-            $table->string('next_date')->nullable();
-            $table->string('call_duration')->nullable();
-            $table->string('note')->nullable();
-            $table->string('call_type')->nullable();
+            $table->string('description')->nullable();
+            $table->string('action_taken');
+            $table->string('assingned');
+            $table->text('note')->nullable();
+            
             $table->boolean('status')->default(1);
             $table->string('deleted_by')->nullable();
             $table->string('deleted_at')->nullable();
@@ -38,6 +40,6 @@ class CreatePhoneCallLogsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('phone_call_logs');
+        Schema::dropIfExists('complains');
     }
 }

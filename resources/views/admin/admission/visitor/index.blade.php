@@ -122,16 +122,10 @@
                         <div class="col-sm-8">
                             <select class="form-control" name="purpose" required id="exampleFormControlSelect1">
 
+                            @foreach($propose as $row)
                                 <option selected disabled>Select</option>
-                                <option value="Marketing">Marketing</option>
-
-                                <option value="Parent Teacher Meeting">Parent Teacher Meeting</option>
-
-                                <option value="Student Meeting">Student Meeting</option>
-
-                                <option value="Staff Meeting">Staff Meeting</option>
-
-                                <option value="Principal Meeting">Principal Meeting</option>
+                                <option value="{{$row->name}}">{{$row->name}}</option>
+                            @endforeach
                             </select>
                             @error('purpose')
                                 <small class="text-danger">{{$message}}</small>

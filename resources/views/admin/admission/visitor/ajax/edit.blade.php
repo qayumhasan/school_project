@@ -5,16 +5,11 @@
         <div class="col-sm-8">
             <select class="form-control" name="purpose" required id="exampleFormControlSelect1">
 
-                <option selected disabled>Select</option>
-                <option @if($visitor->purpose == 'Marketing' ) selected @endif value="Marketing">Marketing</option>
+            @foreach($propose as $row)
+                                <option selected disabled>Select</option>
+                                <option value="{{$row->name}}">{{$row->name}}</option>
+                            @endforeach
 
-                <option @if($visitor->purpose == 'Parent Teacher Meeting' ) selected @endif value="Parent Teacher Meeting">Parent Teacher Meeting</option>
-
-                <option @if($visitor->purpose == 'Student Meeting' ) selected @endif value="Student Meeting">Student Meeting</option>
-
-                <option @if($visitor->purpose == 'Staff Meeting' ) selected @endif value="Staff Meeting">Staff Meeting</option>
-
-                <option @if($visitor->purpose == 'Principal Meeting' ) selected @endif value="Principal Meeting">Principal Meeting</option>
             </select>
             @error('purpose')
             <small class="text-danger">{{$message}}</small>

@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Admin;
 
 use App\AdmissionEnquiry;
+use App\Classes;
+use App\FrontOffice;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
@@ -11,7 +13,10 @@ class AdmissionEnquiryController extends Controller
     public function index ()
     {
         $enquiry =AdmissionEnquiry::all();
-        return view('admin.admission.enquiry.index',compact('enquiry'));
+        $reference = FrontOffice::where('type','reference')->get();
+        $sources = FrontOffice::where('type','sources')->get();
+        $class = Classes::all();
+        return view('admin.admission.enquiry.index',compact('enquiry','sources','reference','class'));
     }
 
     public function create(Request $request)

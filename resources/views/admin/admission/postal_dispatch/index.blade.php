@@ -7,17 +7,17 @@
             <div class="row">
                 <div class="col-md-6">
                     <div class="panel_title">
-                        <span class="panel_icon"><i class="fas fa-border-all"></i></span><span>Phone Call Log</span>
+                        <span class="panel_icon"><i class="fas fa-border-all"></i></span><span>Postal Dispatch</span>
                     </div>
                 </div>
                 <div class="col-md-6 text-right">
                     <div class="panel_title">
-                        <a href="#" class="btn btn-sm btn-success" data-toggle="modal" data-target="#myModal1"><i class="fas fa-plus"></i></span> <span>Add Phone Call Log</span></a>
+                        <a href="#" class="btn btn-sm btn-success" data-toggle="modal" data-target="#myModal1"><i class="fas fa-plus"></i></span> <span>Add Postal Dispatch</span></a>
                     </div>
                 </div>
             </div>
         </div>
-        <form action="{{route('admin.call.log.multi.delete')}}" method="post">
+        <form action="{{route('admin.postal.dispatch.multi.delete')}}" method="post">
             @csrf
             <button type="submit" style="margin: 5px;" class="btn btn-sm btn-danger">
                 <i class="fa fa-trash"></i> Delete all</button>
@@ -35,11 +35,11 @@
                                     </label>
                                 </th>
                             
-                                <th>Name</th>
-                                <th>Phone</th>
+                                <th>To Title</th>
+                                <th>Referance No</th>
+                                <th>From Title</th>
                                 <th>Date</th>
-                                <th>Next Follow Up Date</th>
-                                <th>Call Type</th>
+                                
                               
                                 <th>Status</th>
                                 <th>Action</th>
@@ -48,7 +48,7 @@
                         <tbody>
 
 
-                            @foreach($logs as $row)
+                            @foreach($postals as $row)
                             <tr>
                                 <td>
                                     <label class="chech_container mb-4">
@@ -56,26 +56,21 @@
                                         <span class="checkmark"></span>
                                     </label>
                                 </td>
-                                <td>{{$row->name}}</td>
+                                <td>{{$row->title}}</td>
                                 
-                                <td>{{$row->phone}}</td>
+                                <td>{{$row->ref_no}}</td>
+                                <td>{{$row->from_title}}</td>
                                 <td>{{$row->date}}</td>
-                                <td>{{$row->next_date}}</td>
-                                <td>{{$row->call_type}}</td>
-                              
-                                
-
-
 
                                 <td>
 
                                 
                                     @if($row->status == 1)
-                                    <a href="{{ route('admin.call.log.status', $row->id) }}" class="btn btn-success btn-sm ">
+                                    <a href="{{ route('admin.postal.dispatch.status', $row->id) }}" class="btn btn-success btn-sm ">
                                         <i class="fas fa-thumbs-up"></i></a>
 
                                     @else
-                                    <a href="{{ route('admin.call.log.status', $row->id ) }}" class="btn btn-danger btn-sm">
+                                    <a href="{{ route('admin.postal.dispatch.status', $row->id ) }}" class="btn btn-danger btn-sm">
                                         <i class="fas fa-thumbs-down"></i>
                                     </a>
                                     @endif
@@ -83,9 +78,9 @@
                                 </td>
 
                                 <td>
-                                <a class="view_route btn btn-sm btn-blue text-white" data-action="{{route('admin.call.log.view',$row->id)}}" data-id="{{$row->id}}" title="edit" data-toggle="modal" data-target="#viewmodal"><i class="fa fa-eye" aria-hidden="true"></i></a> 
-                                    | <a class="edit_route btn btn-sm btn-blue text-white" data-action="{{route('admin.call.log.edit',$row->id)}}" data-id="{{$row->id}}" title="edit" data-toggle="modal" data-target="#editModal"><i class="fas fa-pencil-alt"></i></a> |
-                                    <a id="delete" href="{{route('admin.call.log.delete',$row->id)}}" class="btn btn-danger btn-sm text-white" title="Delete">
+                                <a class="view_route btn btn-sm btn-blue text-white" data-action="{{route('admin.postal.dispatch.view',$row->id)}}" data-id="{{$row->id}}" title="edit" data-toggle="modal" data-target="#viewmodal"><i class="fa fa-eye" aria-hidden="true"></i></a> 
+                                    | <a class="edit_route btn btn-sm btn-blue text-white" data-action="{{route('admin.postal.dispatch.edit',$row->id)}}" data-id="{{$row->id}}" title="edit" data-toggle="modal" data-target="#editModal"><i class="fas fa-pencil-alt"></i></a> |
+                                    <a id="delete" href="{{route('admin.postal.dispatch.delete',1)}}" class="btn btn-danger btn-sm text-white" title="Delete">
                                         <i class="far fa-trash-alt"></i>
                                     </a>
                                 </td>
@@ -114,30 +109,54 @@
 
             <!-- Modal Header -->
             <div class="modal-header">
-                <h4 class="modal-title">Add Phone Call Log</h4>
+                <h4 class="modal-title">Add Postal Dispatch</h4>
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
             </div>
 
             <!-- Modal body -->
             <div class="modal-body">
-                <form class="form-horizontal" action="{{ route('admin.call.log.store') }}" enctype="multipart/form-data" method="POST">
+                <form class="form-horizontal" action="{{ route('admin.postal.dispatch.store') }}" enctype="multipart/form-data" method="POST">
                     @csrf
 
 
                     <div class="form-group row">
-                        <label for="inputEmail3" class="col-sm-3 col-form-label text-right">Name <small class="text-danger">*</small>:</label>
+                        <label for="inputEmail3" class="col-sm-3 col-form-label text-right">To Title <small class="text-danger">*</small>:</label>
                         <div class="col-sm-8">
-                            <input type="text" class="form-control form-control -sm" placeholder="Enter Name" name="name" required>
+                            <input type="text" class="form-control form-control -sm" placeholder="Enter Title" name="title" required>
                         </div>
                     </div>
 
                     <div class="form-group row">
-                        <label for="inputEmail3" class="col-sm-3 col-form-label text-right">Phone <small class="text-danger">*</small>:</label>
+                        <label for="inputEmail3" class="col-sm-3 col-form-label text-right">Reference No <small class="text-danger">*</small>:</label>
                         <div class="col-sm-8">
-                            <input type="text" class="form-control form-control -sm" placeholder="Enter Phone" name="phone" required>
+                            <input type="text" class="form-control form-control -sm" placeholder="Enter Reference No" name="ref_no" required>
                         </div>
                     </div>
 
+                    <div class="form-group row">
+                        <label for="inputEmail3" class="col-sm-3 col-form-label text-right">Address:</label>
+                        <div class="col-sm-8">
+                            
+                            <textarea class="form-control form-control -sm" placeholder="Enter Address" name="address"></textarea>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label for="inputEmail3" class="col-sm-3 col-form-label text-right">note:</label>
+                        <div class="col-sm-8">
+                            <textarea rows="3" class="form-control form-control -sm" name="note" name="description" require></textarea>
+
+                        </div>
+                    </div>
+
+
+
+                    <div class="form-group row">
+                        <label for="inputEmail3" class="col-sm-3 col-form-label text-right">From Title:</label>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control form-control -sm" placeholder="Enter From Title" name="form_title" required>
+                        </div>
+                    </div>
                     <div class="form-group row">
                         <label for="inputEmail3" class="col-sm-3 col-form-label text-right">Date:</label>
                         <div class="col-sm-8">
@@ -146,57 +165,14 @@
                     </div>
 
                     <div class="form-group row">
-                        <label for="inputEmail3" class="col-sm-3 col-form-label text-right">Description:</label>
+                        <label for="inputEmail3" class="col-sm-3 col-form-label text-right">File : <small class="text-danger">*</small>:</label>
                         <div class="col-sm-8">
-                            <textarea rows="3" class="form-control form-control -sm" name="description" name="description" require></textarea>
-
+                            <input required type="file" class="form-control form-control -sm" accept="application/pdf" placeholder="Enter Call Duration" name="doc" required>
                         </div>
                     </div>
 
 
-
-                    <div class="form-group row">
-                        <label for="inputEmail3" class="col-sm-3 col-form-label text-right">Next Follow Up Date:</label>
-                        <div class="col-sm-8">
-                            <input type="text" class="form-control form-control -sm datepicker" placeholder="Enter Next Follow Up Date" name="next_date" required>
-                        </div>
-                    </div>
-
-                    <div class="form-group row">
-                        <label for="inputEmail3" class="col-sm-3 col-form-label text-right">Call Duration <small class="text-danger">*</small>:</label>
-                        <div class="col-sm-8">
-                            <input required type="text" class="form-control form-control -sm" placeholder="Enter Call Duration" name="call_duration" required>
-                        </div>
-                    </div>
-
-
-                    <div class="form-group row">
-                        <label for="inputEmail3" class="col-sm-3 col-form-label text-right">Note:</label>
-                        <div class="col-sm-8">
-                            <textarea rows="3" class="form-control form-control -sm" name="note" name="note" require></textarea>
-
-                        </div>
-                    </div>
-                    <fieldset class="form-group">
-                        <div class="row">
-                            <legend class="col-form-label col-sm-2 pt-0">Call Type :</legend>
-                            <div class="col-sm-10">
-                                <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="call_type" id="gridRadios1" value="Incoming" checked>
-                                    <label class="form-check-label" for="gridRadios1">
-                                        Incoming
-                                    </label>
-                                </div>
-                                <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="call_type" id="gridRadios2" value="Incoming">
-                                    <label class="form-check-label" for="gridRadios2">
-                                        Incoming
-                                    </label>
-                                </div>
-
-                            </div>
-                        </div>
-                    </fieldset>
+                    
 
 
 
@@ -220,7 +196,7 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Update Phone Call Log</h5>
+                <h5 class="modal-title" id="exampleModalLabel">Update Postal Dispatch</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>

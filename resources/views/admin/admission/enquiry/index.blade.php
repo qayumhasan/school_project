@@ -40,11 +40,9 @@ date_default_timezone_set('Asia/Dhaka');
                                     <label class="m-0 p-0"><b>Source :</b> </label>
                                     <select id="source" name="source" class="form-control source_search">
                                         <option selected disabled>Select</option>
-                                        <option value="Front Office">Front Office</option>
-                                        <option value="Advertisement">Advertisement</option>
-                                        <option value="Online Front Site">Online Front Site</option>
-                                        <option value="Google Ads">Google Ads</option>
-                                        <option value="Admission Campaign">Admission Campaign</option>
+                                        @foreach($sources as $row)
+                                        <option value="{{$row->name}}">{{$row->name}}</option>
+                                        @endforeach
                                     </select>
                                     <span class="error error_source_search"></span>
                                 </div>
@@ -237,13 +235,11 @@ date_default_timezone_set('Asia/Dhaka');
                         <div class="col-sm-3">
                             <label class="col-form-label p-0 m-0"><b>Reference </b>: </label>
                             <select name="reference" class="form-control">
-                                <option disabled selected>Select</option>
-                                <option value="Staff">Staff</option>
-                                <option value="Parent">Parent</option>
-                                <option value="Student">Student</option>
-                                <option value="Lower Wing">Lower Wing</option>
-                                <option value="Partner School">Partner School</option>
-                                <option value="Self">Self</option>
+                            <option disabled selected>Select</option>
+                                @foreach($reference as $row)
+                                
+                                <option value="{{$row->name}}">{{$row->name}}</option>
+                                @endforeach
                             </select>
                             <span class="error"></span>
                         </div>
@@ -251,12 +247,11 @@ date_default_timezone_set('Asia/Dhaka');
                         <div class="col-sm-3">
                             <label class="col-form-label p-0 m-0"><b>Source <small class="text-danger">*</small></b>: </label>
                             <select required name="source" class="form-control source">
-                                <option disabled selected>Select</option>
-                                <option value="Front Office">Front Office</option>
-                                <option value="Advertisement">Advertisement</option>
-                                <option value="Online Front Site">Online Front Site</option>
-                                <option value="Google Ads">Google Ads</option>
-                                <option value="Admission Campaign">Admission Campaign</option>
+                            <option disabled selected>Select</option>
+                                @foreach($sources as $row)
+                                
+                                <option value="{{$row->name}}">{{$row->name}}</option>
+                                @endforeach
 
                             </select>
                             <span class="error error_source"></span>
@@ -265,12 +260,11 @@ date_default_timezone_set('Asia/Dhaka');
                         <div class="col-sm-3">
                             <label class="col-form-label p-0 m-0"><b>Class <small class="text-danger">*</small></b>: </label>
                             <select required name="class" class="form-control">
-                                <option disabled selected>Select</option>
-                                <option value="Front Office">Front Office</option>
-                                <option value="Advertisement">Advertisement</option>
-                                <option value="Online Front Site">Online Front Site</option>
-                                <option value="Google Ads">Google Ads</option>
-                                <option value="Admission Campaign">Admission Campaign</option>
+                            <option disabled selected>Select</option>
+                                @foreach($class as $row)
+                                
+                                <option value="{{$row->name}}">{{$row->name}}</option>
+                                @endforeach
 
                             </select>
                             <span class="error error_class"></span>
@@ -395,13 +389,11 @@ date_default_timezone_set('Asia/Dhaka');
                         <div class="col-sm-3">
                             <label class="col-form-label p-0 m-0"><b>Reference </b>: </label>
                             <select id="update_reference" name="reference" class="form-control">
-                                <option disabled selected>Select</option>
-                                <option value="Staff">Staff</option>
-                                <option value="Parent">Parent</option>
-                                <option value="Student">Student</option>
-                                <option value="Lower Wing">Lower Wing</option>
-                                <option value="Partner School">Partner School</option>
-                                <option value="Self">Self</option>
+                            <option disabled selected>Select</option>
+                                @foreach($reference as $row)
+                                
+                                <option value="{{$row->name}}">{{$row->name}}</option>
+                                @endforeach
                             </select>
                             <span class="error_edit"></span>
                         </div>
@@ -409,12 +401,12 @@ date_default_timezone_set('Asia/Dhaka');
                         <div class="col-sm-3">
                             <label class="col-form-label p-0 m-0"><b>Source <small class="text-danger">*</small></b>: </label>
                             <select id="update_source" required name="source" class="form-control source">
-                                <option disabled selected>Select</option>
-                                <option value="Front Office">Front Office</option>
-                                <option value="Advertisement">Advertisement</option>
-                                <option value="Online Front Site">Online Front Site</option>
-                                <option value="Google Ads">Google Ads</option>
-                                <option value="Admission Campaign">Admission Campaign</option>
+
+                            <option disabled selected>Select</option>
+                                @foreach($sources as $row)
+                                
+                                <option value="{{$row->name}}">{{$row->name}}</option>
+                                @endforeach
 
                             </select>
                             <span class="error_edit error_edit_source"></span>
@@ -423,12 +415,12 @@ date_default_timezone_set('Asia/Dhaka');
                         <div class="col-sm-3">
                             <label class="col-form-label p-0 m-0"><b>Class <small class="text-danger">*</small></b>: </label>
                             <select id="update_class" required name="class" class="form-control">
-                                <option disabled selected>Select</option>
-                                <option value="Front Office">Front Office</option>
-                                <option value="Advertisement">Advertisement</option>
-                                <option value="Online Front Site">Online Front Site</option>
-                                <option value="Google Ads">Google Ads</option>
-                                <option value="Admission Campaign">Admission Campaign</option>
+
+                            <option disabled selected>Select</option>
+                                @foreach($class as $row)
+                                
+                                <option value="{{$row->name}}">{{$row->name}}</option>
+                                @endforeach
 
                             </select>
                             <span class="error_edit error_edit_class"></span>
@@ -476,7 +468,7 @@ date_default_timezone_set('Asia/Dhaka');
                 <div class="container-fluid">
                     <div class="row">
                         <div class="col-md-6">
-                            <form method="post" action="{{route('admin.admission.enquiry.update')}}">
+                            <form method="post" action="{{route('admin.admission.follow.enquiry.update')}}">
                                 @csrf
                                 <div class="form-group row">
 
@@ -507,8 +499,8 @@ date_default_timezone_set('Asia/Dhaka');
 
                                     <div class="col-sm-12">
                                         <label>Status <small class="text-danger">*</small></label>
-                                        <select  class="form-control" name="status" required>
-                                            
+                                        <select class="form-control" name="status" required>
+
 
                                             <option value="active">Active</option>
 
@@ -563,8 +555,8 @@ date_default_timezone_set('Asia/Dhaka');
                                         <b class="d-inline">No of child:</b>
                                         <span class="text-right d-inline mr-auto" style="float: right;" id="view_no_of_child"> </span>
                                     </li>
-                                    
-                                    
+
+
                                 </ul>
 
                             </div>
@@ -593,7 +585,7 @@ date_default_timezone_set('Asia/Dhaka');
             document.getElementById('view_id').value = data.id;
             document.getElementById('createdby').innerHTML = data.assigned;
             document.getElementById('view_phone').innerHTML = data.phone;
-            
+
             document.getElementById('view_address').innerHTML = data.email;
             // document.getElementById('update_address').value = data.address;
             // document.getElementById('update_description').value = data.description;
