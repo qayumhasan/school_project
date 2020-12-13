@@ -1011,8 +1011,95 @@ Auth::routes();
 
 
 
-Route::group(['prefix' => 'admin/admission/enquiry', 'middleware' => 'auth:admin' , 'namespace' => 'Admin'], function() {
+Route::group(['prefix' => 'admin/front/office/admission/enquiry', 'middleware' => 'auth:admin' , 'namespace' => 'Admin'], function() {
     Route::get('/', 'AdmissionEnquiryController@index')->name('admin.admission.enquiry.index');
     Route::post('/create', 'AdmissionEnquiryController@create')->name('admin.admission.enquiry.create');
     Route::get('/search', 'AdmissionEnquiryController@search')->name('admin.admission.enquiry.search');
+    Route::post('/update', 'AdmissionEnquiryController@update')->name('admin.admission.enquiry.update');
+    Route::post('/follow/up/update', 'AdmissionEnquiryController@followUpUpdate')->name('admin.admission.follow.enquiry.update');
+    Route::get('/delete/{id}', 'AdmissionEnquiryController@enquiryDelete')->name('admin.admission.enquiry.delete');
+});
+
+Route::group(['prefix' => 'admin/front/office/visitor/list', 'middleware' => 'auth:admin' , 'namespace' => 'Admin'], function() {
+    Route::get('/', 'VisitorListController@index')->name('admin.visitor.list');
+    Route::post('/store', 'VisitorListController@store')->name('admin.visitor.store');
+    Route::get('/edit/{id}', 'VisitorListController@edit')->name('admin.visitor.edit');
+    Route::post('/update/{id}', 'VisitorListController@update')->name('admin.visitor.update');
+    Route::get('/delete/{id}', 'VisitorListController@delete')->name('admin.visitor.delete');
+    Route::get('/status/{id}', 'VisitorListController@status')->name('admin.visitor.status');
+    Route::post('/multi/delete', 'VisitorListController@multiDelete')->name('admin.visitor.multi.delete');
+    
+});
+Route::group(['prefix' => 'admin/front/office/call/log', 'middleware' => 'auth:admin' , 'namespace' => 'Admin'], function() {
+    Route::get('/', 'PhoneCallLogController@index')->name('admin.call.log.list');
+    Route::post('/store', 'PhoneCallLogController@store')->name('admin.call.log.store');
+    Route::get('/edit/{id}', 'PhoneCallLogController@edit')->name('admin.call.log.edit');
+    Route::post('/update/{id}', 'PhoneCallLogController@update')->name('admin.call.log.update');
+    Route::get('/delete/{id}', 'PhoneCallLogController@delete')->name('admin.call.log.delete');
+    Route::get('/status/{id}', 'PhoneCallLogController@status')->name('admin.call.log.status');
+    Route::get('/view/{id}', 'PhoneCallLogController@show')->name('admin.call.log.view');
+    Route::post('/multi/delete', 'PhoneCallLogController@multiDelete')->name('admin.call.log.multi.delete');
+    
+});
+
+Route::group(['prefix' => 'admin/front/office/postal/dispatch', 'middleware' => 'auth:admin' , 'namespace' => 'Admin'], function() {
+    Route::get('/', 'PostalDispatchController@index')->name('admin.postal.dispatch.list');
+    Route::post('/store', 'PostalDispatchController@store')->name('admin.postal.dispatch.store');
+    Route::get('/edit/{id}', 'PostalDispatchController@edit')->name('admin.postal.dispatch.edit');
+    Route::post('/update/{id}', 'PostalDispatchController@update')->name('admin.postal.dispatch.update');
+    Route::get('/delete/{id}', 'PostalDispatchController@delete')->name('admin.postal.dispatch.delete');
+    Route::get('/status/{id}', 'PostalDispatchController@status')->name('admin.postal.dispatch.status');
+    Route::get('/view/{id}', 'PostalDispatchController@show')->name('admin.postal.dispatch.view');
+    Route::post('/multi/delete', 'PostalDispatchController@multiDelete')->name('admin.postal.dispatch.multi.delete');
+    
+});
+
+Route::group(['prefix' => 'admin/front/office/postal/receive', 'middleware' => 'auth:admin' , 'namespace' => 'Admin'], function() {
+    Route::get('/', 'PostalRecevicController@index')->name('admin.postal.receives.list');
+    Route::post('/store', 'PostalRecevicController@store')->name('admin.postal.receives.store');
+    Route::get('/edit/{id}', 'PostalRecevicController@edit')->name('admin.postal.receives.edit');
+    Route::post('/update/{id}', 'PostalRecevicController@update')->name('admin.postal.receives.update');
+    Route::get('/delete/{id}', 'PostalRecevicController@delete')->name('admin.postal.receives.delete');
+    Route::get('/status/{id}', 'PostalRecevicController@status')->name('admin.postal.receives.status');
+    Route::get('/view/{id}', 'PostalRecevicController@show')->name('admin.postal.receives.view');
+    Route::post('/multi/delete', 'PostalRecevicController@multiDelete')->name('admin.postal.receives.multi.delete');
+    
+});
+
+
+Route::group(['prefix' => 'admin/front/office/complaint', 'middleware' => 'auth:admin' , 'namespace' => 'Admin'], function() {
+    Route::get('/', 'ComplainController@index')->name('admin.complaint.list');
+    Route::post('/store', 'ComplainController@store')->name('admin.complaint.store');
+    Route::get('/edit/{id}', 'ComplainController@edit')->name('admin.complaint.edit');
+    Route::post('/update/{id}', 'ComplainController@update')->name('admin.complaint.update');
+    Route::get('/delete/{id}', 'ComplainController@delete')->name('admin.complaint.delete');
+    Route::get('/status/{id}', 'ComplainController@status')->name('admin.complaint.status');
+    Route::get('/view/{id}', 'ComplainController@show')->name('admin.complaint.view');
+    Route::post('/multi/delete', 'ComplainController@multiDelete')->name('admin.complaint.multi.delete');
+    
+});
+
+
+
+Route::group(['prefix' => 'admin/front/office/setup', 'middleware' => 'auth:admin' , 'namespace' => 'Admin'], function() {
+    Route::get('/', 'FrontOfficeSetupController@index')->name('admin.setup.index');
+    Route::post('/propuse/store', 'FrontOfficeSetupController@store')->name('admin.setup.store');
+    Route::post('/propuse/update/{id}', 'FrontOfficeSetupController@update')->name('admin.setup.update');
+    Route::get('/propuse/delete/{id}', 'FrontOfficeSetupController@delete')->name('admin.front.office.setup.delete');
+
+
+    Route::post('/complain/store', 'FrontOfficeSetupController@complainStore')->name('admin.complain.store');
+    Route::post('/complain/update/{id}', 'FrontOfficeSetupController@complainUpdate')->name('admin.setup.complain.update');
+    Route::get('/complain/delete/{id}', 'FrontOfficeSetupController@Complaindelete')->name('admin.front.office.setup.complain.delete');
+
+
+    Route::post('/sources/store', 'FrontOfficeSetupController@sourcesStore')->name('admin.sources.store');
+    Route::post('/sources/update/{id}', 'FrontOfficeSetupController@sourcesUpdate')->name('admin.setup.sources.update');
+    Route::get('/sources/delete/{id}', 'FrontOfficeSetupController@sourcesdelete')->name('admin.front.office.setup.sources.delete');
+
+    Route::post('/reference/store', 'FrontOfficeSetupController@referenceStore')->name('admin.reference.store');
+    Route::post('/reference/update/{id}', 'FrontOfficeSetupController@referenceUpdate')->name('admin.setup.reference.update');
+    Route::get('/reference/delete/{id}', 'FrontOfficeSetupController@referencdelete')->name('admin.front.office.setup.sources.delete');
+   
+
 });

@@ -25,6 +25,7 @@ class RolePermissionController extends Controller
 
     public function permission(Request $request, $roleId)
     {
+        
         $addPermission = RolePermission::where('role_id', $roleId)->firstOrFail();
         $addPermission->student_module = $this->studentPermission($request);
         $addPermission->academic_module = $this->academicPermission($request);
@@ -44,6 +45,7 @@ class RolePermissionController extends Controller
         $addPermission->fees_collection_module = $this->feesCollectionPermission($request);
         $addPermission->report_module = $this->reportPermission($request);
         $addPermission->settings_module = $this->settingsPermission($request);
+        $addPermission->front_office = $this->frontOfficePermission($request);
         $addPermission->save();
         
         return response()->json('Successfully permission has been saved.');  
@@ -590,6 +592,29 @@ class RolePermissionController extends Controller
         ];
 
         return json_encode($settingsPermission); 
+    }
+
+    private function frontOfficePermission($request)
+    {
+        $frontOfficePermission = [  
+            'admission_enquiry' => [
+                'view' => isset($request->enquiry_view) ? $request->enquiry_view : 0,
+                'add' => isset($request->enquiry_add) ? $request->enquiry_add : 0,
+                'edit' => isset($request->enquiry_edit) ? $request->enquiry_edit : 0,
+                'delete' => isset($request->enquiry_delete) ? $request->enquiry_delete : 0,
+            ],
+            'session_setting' => [
+                'view' => isset($request->session_setting_view) ? $request->session_setting_view : 0,
+            ],
+            'notification_setting' => [
+                'view' => isset($request->notification_setting_view) ? $request->notification_setting_view : 0,
+            ],
+            'sms_setting' => [
+                'view' => isset($request->sms_setting_view) ? $request->sms_setting_view : 0,
+            ],
+        ];
+
+        return json_encode($frontOfficePermission); 
     }
 
 

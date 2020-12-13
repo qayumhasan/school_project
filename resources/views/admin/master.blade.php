@@ -50,9 +50,9 @@
     
 <body id="page-top">
     <!-- preloader -->
-    <div class="preloader">
+    <!-- <div class="preloader">
         <img height="180" width="180" src="{{asset('public/admins/images/preloader4.gif')}}" alt="">
-    </div>
+    </div> -->
     <!-- wrapper -->
     <div class="wrapper">
         
@@ -231,6 +231,14 @@
             });
         });
     </script>
+    <script>
+    $(document).ready(function() {
+        $('.datepicker').datepicker({
+            format: 'dd-mm-yyyy',
+            autoclose: true
+        });
+    })
+</script>
     <!-- Main js -->
     <script src="{{asset('public/admins/js/main.js')}}"></script>
     <script src="{{asset('public/admins/plugins/timePicker/js/timepicki.js')}}"></script>

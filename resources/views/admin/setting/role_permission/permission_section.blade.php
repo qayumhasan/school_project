@@ -34,6 +34,7 @@
                         @csrf
                         <table class="table mb-2">
                             <thead>
+                                
                                 <tr class="text-left">
                                     <th>Module</th>
                                     <th>Section</th>
@@ -42,6 +43,7 @@
                                     <th>Edit</th>
                                     <th>Delete</th>
                                 </tr>
+                                
                             </thead>
                             <tbody>
                                 
@@ -63,6 +65,38 @@
                                         </td>
                                     </tr>
                                 </div>
+
+
+
+                                <!-- front office area start -->
+
+                                <div class="front_office">
+                                    <tr class="text-left">
+                                        <td class="text-dark"><b>Front Office</b></td>
+                                        <td>Admission Enquiry</td>
+                                        <td>
+                                            <input {{ json($permits->front_office)['admission_enquiry']['view'] == 1 ? 'CHECKED' : '' }} type="checkbox" name="enquiry_view" value="1">
+                                        </td>
+                                        <td>
+                                            <input {{json($permits->front_office)['admission_enquiry']['add'] == 1 ? 'CHECKED' : '' }} type="checkbox" name="enquiry_add" value="1">
+                                        </td>
+                                        <td>
+                                            <input {{json($permits->front_office)['admission_enquiry']['edit'] == 1 ? 'CHECKED' : '' }} type="checkbox" name="enquiry_edit" value="1">
+                                        </td>
+                                        <td>
+                                            <input {{json($permits->front_office)['admission_enquiry']['delete'] == 1 ? 'CHECKED' : '' }} type="checkbox" name="enquiry_delete" value="1">
+                                        </td>
+                                    </tr>
+
+                                   
+
+
+                                </div>
+
+                                <!-- front office area end -->
+
+
+                                
 
                                 <div class="academic_module">
                                     <tr class="text-left">
@@ -1272,6 +1306,7 @@
                     type:type,
                     data:request,
                     success:function(data){
+                        console.log(data);
                        $('.submit_button').show();
                        $('.loading_button').hide();
                        toastr.success(data, 'Successfull');
